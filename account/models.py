@@ -18,6 +18,6 @@ class User(models.Model):
         default='https://res.cloudinary.com/health-id/image/upload/'
         'v1554552278/Profile_Picture_Placeholder.png'
     )
-    created_at = models.DateField(auto_now_add=True)
+    created_at = models.DateTimeField(auto_now_add=True)
     is_admin = models.BooleanField(default=False)
     deleted_at = models.DateTimeField(blank=True, null=True)

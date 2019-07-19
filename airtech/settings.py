@@ -42,6 +42,7 @@ INSTALLED_APPS = [
 
     'account.apps.AccountConfig',
     'ticket.apps.TicketConfig',
+    'flight.apps.FlightConfig',
 ]
 
 MIDDLEWARE = [
