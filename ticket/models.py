@@ -2,6 +2,8 @@
 
 from django.db import models
 
+from account.models import User
+
 
 class Ticket(models.Model):
     """Class to handle tickets for users when flight is booked"""
@@ -25,5 +27,6 @@ class Ticket(models.Model):
     )
     cost = models.IntegerField(default=0)
     booked = models.BooleanField(default=False)
-    created_at = models.DateField(auto_now_add=True)
+    owner = models.OneToOneField(User, null=True, on_delete=models.CASCADE)
+    created_at = models.DateTimeField(auto_now_add=True)
     deleted_at = models.DateTimeField(blank=True, null=True)
