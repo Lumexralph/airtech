@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'rest_framework',
 
     'account.apps.AccountConfig',
+    'ticket.apps.TicketConfig',
 ]
 
 MIDDLEWARE = [
