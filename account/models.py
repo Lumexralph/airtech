@@ -1,8 +1,35 @@
 """Module containing the user entity"""
 from django.db import models
+from django.contrib.auth.models import (AbstractBaseUser, BaseUserManager)
+
+from shared.base_model import BaseModel
 
 
-class User(models.Model):
+class UserManager(BaseUserManager):
+    def create_user(self, **kwargs):
+        """
+        Creates and saves a User with the given credentials.
+        """
+        email = kwargs.get("email")
+        password = kwargs.get("password")
+        username = kwargs.get("username")
+
+        user = self.model(
+            username=username, email=self.normalize_email(email)
+        )
+        user.set_password(password)
+        user.save()
+        return user
+
+    def create_superuser(self, email, password):
+        user = self.create_user(email=email, password=password)
+        user.is_superuser = user.is_staff = True
+        user.is_active = user.is_admin = True
+        user.save(using=self._db)
+        return user
+
+
+class User(AbstractBaseUser, BaseModel):
     """Model for a user in the system"""
 
     class Meta:
@@ -18,6 +45,10 @@ class User(models.Model):
         default='https://res.cloudinary.com/health-id/image/upload/'
         'v1554552278/Profile_Picture_Placeholder.png'
     )
-    created_at = models.DateTimeField(auto_now_add=True)
     is_admin = models.BooleanField(default=False)
-    deleted_at = models.DateTimeField(blank=True, null=True)
+    last_login = models.DateTimeField(auto_now=True)
+
+    objects = UserManager()
+
+    def __str__(self):
+        return self.email

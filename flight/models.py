@@ -2,8 +2,9 @@
 from django.db import models
 
 from ticket.models import Ticket
+from shared.base_model import BaseModel
 
-class Flight(models.Model):
+class Flight(BaseModel):
     """Model for flights in the system"""
 
     class Meta:
@@ -16,7 +17,5 @@ class Flight(models.Model):
     departure_date = models.DateTimeField()
     ticket = models.ForeignKey(Ticket, related_name='flight', on_delete=models.CASCADE, null=True)
     return_date = models.DateTimeField()
-    created_at = models.DateTimeField(auto_now_add=True)
-    deleted_at = models.DateTimeField(blank=True, null=True)
     total_seats = models.PositiveIntegerField()
     available_seats = models.PositiveIntegerField()
