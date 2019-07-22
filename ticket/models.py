@@ -3,9 +3,10 @@
 from django.db import models
 
 from account.models import User
+from shared.base_model import BaseModel
 
 
-class Ticket(models.Model):
+class Ticket(BaseModel):
     """Class to handle tickets for users when flight is booked"""
 
     class Meta:
@@ -28,5 +29,3 @@ class Ticket(models.Model):
     cost = models.IntegerField(default=0)
     booked = models.BooleanField(default=False)
     owner = models.OneToOneField(User, null=True, on_delete=models.CASCADE)
-    created_at = models.DateTimeField(auto_now_add=True)
-    deleted_at = models.DateTimeField(blank=True, null=True)
