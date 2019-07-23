@@ -22,4 +22,5 @@ urlpatterns = [
     path(r'', airtech_home),
     path(r'admin/', admin.site.urls),
     path('auth/', include('account.urls')),
+    path('flight/', include('flight.urls')),
 ]
