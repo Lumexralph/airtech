@@ -27,6 +27,8 @@ def get_token(http_request):
 
 
 def token_required(func):
+    """Function decorator that validates or checks token provided in a request
+    """
     @wraps(func)
     def wrapper_func(*args, **kwargs):
         instance, request = args
