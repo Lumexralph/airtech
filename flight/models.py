@@ -11,7 +11,7 @@ class Flight(BaseModel):
         """Class to add more information on flight model"""
         ordering = ('departure_date', )
 
-    flight_type = models.CharField(max_length=50, unique=True)
+    flight_type = models.CharField(max_length=50)
     to_location = models.CharField(max_length=150)
     from_location = models.CharField(max_length=150)
     departure_date = models.DateTimeField()
