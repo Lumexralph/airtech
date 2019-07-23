@@ -11,12 +11,7 @@ class UserRegistrationSerializer(serializers.ModelSerializer):
     class Meta:
         """Class to add additional information to the serializer"""
         model = User
-        fields = ['id', 'username', 'first_name', 'last_name', 'image_url', 'email']
-
-    def create(self, validated_data):
-        user = User.objects.create_user(**validated_data)
-        return user
-
+        exclude = ['password']
 
 class UserLoginSerializer(serializers.ModelSerializer):
     """Class to handle the serializing and deserializing of user login"""
@@ -24,12 +19,35 @@ class UserLoginSerializer(serializers.ModelSerializer):
     class Meta:
         """Class to add additional information to the serializer"""
         model = User
-        fields = ['id', 'username', 'first_name', 'last_name', 'image_url', 'email']
+        exclude = ['password']
         extra_kwargs = {'username': {'required': False}}
 
     def login(self, validated_data):
         email = validated_data['email']
+        password = validated_data['password']
         user = User.objects.filter(email=email).first()
+        data = {
+            'error': True
+        }
 
-        user_data = model_to_dict(user)
-        return user_data
+        if user:
+            result = user.check_password(password)
+
+            if result:
+                user_data = model_to_dict(user)
+                user_data['error'] = False
+                return user_data
+
+        return data
+
+
+class UserSerializer(serializers.ModelSerializer):
+    """Class to handle the serializing and deserializing of user details"""
+
+    class Meta:
+        """Class to add additional information to the serializer"""
+        model = User
+        exclude = ['password']
+        extra_kwargs = {'username': {'required': False},
+        'email': {'required': False},
+        'password': {'required': False}}
