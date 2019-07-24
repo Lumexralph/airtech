@@ -3,10 +3,11 @@ from rest_framework import generics, status
 from rest_framework.response import Response
 from django.forms import model_to_dict
 
-from .models import Flight
 from account.models import User
-from .serializers import FlightSerializer,FlightDetailSerializer
 from shared.authenticate_user import token_required
+from .models import Flight
+from .serializers import FlightSerializer, FlightDetailSerializer
+from services.send_email import send_email_to
 
 
 class CreateListFlight(generics.ListCreateAPIView):
@@ -35,7 +36,7 @@ class FlightDetail(generics.RetrieveUpdateDestroyAPIView):
         return self.destroy(request, *args, **kwargs)
 
 
-class FlightReservation(generics.UpdateAPIView):
+class FlightReservation(generics.RetrieveUpdateAPIView):
     queryset = Flight.objects.all()
     serializer_class = FlightSerializer
 
@@ -62,17 +63,22 @@ class FlightReservation(generics.UpdateAPIView):
                 flight.available_seats -= 1
                 flight.reservations = user
                 flight.save()
-                flight = model_to_dict(flight)
-                serializer = self.get_serializer(data=flight)
+                flight_dict = model_to_dict(flight)
+                serializer = self.get_serializer(data=flight_dict)
                 serializer.is_valid(raise_exception=True)
+
+                send_email_to(
+                    'Airtech Flight Ticket',
+                    user_email,
+                    f'Flight Type: {flight.flight_type}' \
+                    f'Departure Date: {flight.departure_date}' \
+                    f'Location: {flight.to_location}'
+                )
 
                 return serializer
 
-                # send mail to the user
 
 
-
-
-        # if flight:
-        #     flight.reservations = 
-
+    @token_required
+    def get(self, request, *args, **kwargs):
+        return self.retrieve(request, *args, **kwargs)

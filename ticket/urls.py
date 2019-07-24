@@ -6,6 +6,7 @@ urlpatterns = [
     path('', views.ListTickets.as_view()),
     path('flight/<int:pk>/', views.CreateFlightTicket.as_view()),
     path('<int:pk>/', views.TicketDetail.as_view()),
+    path('<int:pk>/book/', views.BookTicket.as_view()),
 ]
 
 urlpatterns = format_suffix_patterns(urlpatterns)

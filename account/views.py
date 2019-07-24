@@ -1,6 +1,9 @@
 """Module containing the methods/classes that handles account route"""
 from rest_framework import generics, mixins, status
 from rest_framework.response import Response
+import cloudinary
+import cloudinary.api
+import cloudinary.uploader
 
 from account.serializers import UserRegistrationSerializer, UserLoginSerializer, UserSerializer
 from account.models import User
@@ -75,6 +78,22 @@ class UserDetail(generics.RetrieveUpdateDestroyAPIView):
     @token_required
     def put(self, request, *args, **kwargs):
         return self.update(request, *args, **kwargs)
+
+    def update(self, request, *args, **kwargs):
+        image_url = request.data.get('image_url')
+        if image_url:
+            # upload the image
+            image_url = cloudinary.uploader.upload(image_url).get('url')
+            request.data['image_url'] = image_url
+
+        partial = kwargs.pop('partial', False)
+        instance = self.get_object()
+        serializer = self.get_serializer(instance, data=request.data, partial=partial)
+        serializer.is_valid(raise_exception=True)
+
+        serializer.save()
+
+        return Response(serializer.data)
 
     @token_required
     def delete(self, request, *args, **kwargs):
