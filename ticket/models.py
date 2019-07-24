@@ -28,4 +28,4 @@ class Ticket(BaseModel):
     )
     cost = models.IntegerField(default=0)
     booked = models.BooleanField(default=False)
-    owner = models.OneToOneField(User, null=True, on_delete=models.CASCADE)
+    owners = models.ForeignKey(User, null=True, related_name='my_tickets', on_delete=models.CASCADE)

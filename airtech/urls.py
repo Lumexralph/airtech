@@ -19,8 +19,9 @@ from django.urls import path, include
 from .home_view import airtech_home
 
 urlpatterns = [
-    path(r'', airtech_home),
-    path(r'admin/', admin.site.urls),
+    path('', airtech_home),
+    path('admin/', admin.site.urls),
     path('auth/', include('account.urls')),
     path('flight/', include('flight.urls')),
+    path('ticket/', include('ticket.urls'))
 ]
