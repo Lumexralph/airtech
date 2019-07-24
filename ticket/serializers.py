@@ -12,5 +12,5 @@ class TicketSerializer(serializers.ModelSerializer):
     class Meta:
         """Class to add additional information to the serializer"""
         model = Ticket
-        fields = ['id', 'ticket_class', 'cost', 'booked', 'owner',              'created_at','updated_at','deleted_at', 'flight']
+        fields = ['id', 'ticket_class', 'cost', 'booked', 'owners',              'created_at','updated_at','deleted_at', 'flight']
         extra_kwargs = {'flight': {'required': False}}
