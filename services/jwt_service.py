@@ -4,7 +4,7 @@ import datetime
 import jwt
 
 
-def generate_token(payload, exp=120):
+def generate_token(payload, exp=12000):
     """
     Generates jwt tokens
 

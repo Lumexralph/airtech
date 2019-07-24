@@ -2,6 +2,7 @@
 
 from rest_framework import  serializers
 from flight.models import Flight
+from account.serializers import UserSerializer
 
 
 class FlightSerializer(serializers.ModelSerializer):
@@ -11,11 +12,11 @@ class FlightSerializer(serializers.ModelSerializer):
         """Class to add additional information to the serializer"""
         model = Flight
         fields = '__all__'
-        extra_kwargs = { 'available_seats': {'required': False}}
 
 
 class FlightDetailSerializer(serializers.ModelSerializer):
     """Class to handle the serializing and deserializing of flight data"""
+    reservations = UserSerializer(many=True, read_only=True)
 
     class Meta:
         """Class to add additional information to the serializer"""
