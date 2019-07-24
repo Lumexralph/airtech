@@ -16,7 +16,7 @@ class FlightSerializer(serializers.ModelSerializer):
 
 class FlightDetailSerializer(serializers.ModelSerializer):
     """Class to handle the serializing and deserializing of flight data"""
-    reservations = UserSerializer(many=True, read_only=True)
+    reservations = UserSerializer(read_only=True)
 
     class Meta:
         """Class to add additional information to the serializer"""
