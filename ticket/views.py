@@ -56,6 +56,18 @@ class TicketDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = Ticket.objects.all()
     serializer_class = TicketSerializer
 
+    @token_required
+    def get(self, request, *args, **kwargs):
+        return self.retrieve(request, *args, **kwargs)
+
+    @token_required
+    def put(self, request, *args, **kwargs):
+        return self.update(request, *args, **kwargs)
+
+    @token_required
+    def delete(self, request, *args, **kwargs):
+        return self.destroy(request, *args, **kwargs)
+
 
 class BookTicket(generics.UpdateAPIView):
     queryset = Ticket.objects.all()

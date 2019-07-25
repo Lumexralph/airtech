@@ -88,6 +88,32 @@ Run the command below to run the tests for the application.
   $ python manage.py test
   ```
 
+## API Endpoints
+
+  Feature | Method | URL | Payload
+  -------- | ------- | ------- | --------
+  Create an account | POST | /auth/signup | {	"username": "name","email": "name@gmail.com","password": "name"}
+  User log in | POST | /auth/login | {"email": "Sony@gmagil.com",	"password": "dayo"}
+  Find a user | GET | /auth/users/{user_id}/ |
+  Update user detials | PUT | /auth/users/{user_id}/ | {"username":"Sony","email":"Sony@gmagil.com","first_name": "Sony","last_name":"sunny","image_url":"image","is_admin":false} - all fields are optional
+  Create flight details | POST | /flight/ | {"flight_type":"economy","to_location":"Abuja","from_location":"Lagos","departure_date":"2019-08-22","return_date":"2019-08-27","total_seats":50,"available_seats":37}
+  Get all flights | GET | /flight/ |
+  Find a flight | GET | /flight/{flight_id} |
+  Update a flight | PUT | /flight/{flight_id} | {"flight_type":"economy","to_location":"Abuja","from_location":"Lagos","departure_date":"2019-08-22","return_date":"2019-08-27","total_seats":50,"available_seats":37} - all fields are optional
+  Remove a flight | DELETE | /flight/{flight_id} |
+  Create ticket for a flight | POST | /ticket/flight/{flight_id}/ | {"ticket_class":"BS","cost":0} - BS - Business
+  Book a ticket for the flight | PUT | /ticket/{ticket_id}/book/ |
+  Get all tickets | GET | /ticket/ |
+  Get a ticket | GET | /ticket/{ticket_id} |
+  Update the details of a ticket | PUT | /ticket/{ticket_id} | {"ticket_class":"BS","cost":0}
+  Remove a ticket | DELETE | /ticket/{ticket_id} |
+  Make reservations for a flight | PUT | /flight/{flight_id}/reservations |
+  Get reservations for a flight | GET | /flight/{flight_id}/reservations |
+
+
+
+
+  `After Signup or Login, a token will be  generated and can be found in the header, add this token with every request in the Authorization field (Bearer Token)`
 ## Deployment
 
 The application's deployment is still pending for the backend APIs. Details will be filled here as soon as it is ready.
