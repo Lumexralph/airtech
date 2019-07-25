@@ -1,0 +1,6 @@
+[run]
+[report]
+omit = *tests*, *migrations*,airtech/wsgi.py, *airtech_venv*, manage.py
+fail_under = 90
+exclude_lines =
+    pragma: no cover

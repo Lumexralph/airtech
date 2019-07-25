@@ -1,7 +1,7 @@
 """Module containing tests for the account apps"""
 from django.test import TestCase
 
-from .models import User
+from account.models import User
 
 
 class UserModelTests(TestCase):
