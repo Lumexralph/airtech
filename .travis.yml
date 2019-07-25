@@ -1,0 +1,36 @@
+language: python
+python:
+  - "2.7"
+  - "3.5"
+  - "3.6"
+
+services:
+  - postgresql
+
+env:
+  global:
+    - CC_TEST_REPORTER_ID=168261c12eb4c92b83c01b6e979e1156b711cfbae5fabeb22b5f965264eff5e4
+
+before_install:
+  - npm install -g node-gyp node-pre-gyp
+
+before_script:
+  - psql -c 'create database tests;' -U postgres
+  - chmod 0755 ./node_modules/.bin/mocha
+  - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
+  - chmod +x ./cc-test-reporter
+  - ./cc-test-reporter before-build
+
+# command to install dependencies
+install:
+  - pip install -r requirements.txt
+  - pip install .
+
+# command to run tests
+script:
+  - coverage run --source=.  manage.py test
+
+
+after_success:
+  - coverage report -m
+  - ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT
