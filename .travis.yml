@@ -10,9 +10,6 @@ env:
   global:
     - CC_TEST_REPORTER_ID=168261c12eb4c92b83c01b6e979e1156b711cfbae5fabeb22b5f965264eff5e4
 
-before_install:
-  - npm install -g node-gyp node-pre-gyp
-
 before_script:
   - psql -c 'create database tests;' -U postgres
   - chmod 0755 ./node_modules/.bin/mocha
