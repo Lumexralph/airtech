@@ -1,5 +1,6 @@
 """Module contains the jwt operations"""
 import datetime
+import os
 
 import jwt
 
@@ -14,7 +15,7 @@ def generate_token(payload, exp=12000):
     result:
         token: This is the bearer token in this format 'Bearer token'
     """
-    key = 'lumexAirtech2018'
+    key = os.environ.get('JWT_SECRET')
     jwt_payload = jwt.encode({'user_info': payload,
                               'exp': datetime.datetime.utcnow() + datetime.timedelta(seconds=exp)},
                              key, algorithm='HS256')
@@ -35,7 +36,7 @@ def decode_token(token):
     Raises:
         raises jwt error if the token failed verification
     """
-    key = 'lumexAirtech2018'
+    key = os.environ.get('JWT_SECRET')
     result = {
         'error': True,
         'data': None,

@@ -70,8 +70,8 @@ class FlightReservation(generics.RetrieveUpdateAPIView):
                 send_email_to(
                     'Airtech Flight Ticket',
                     user_email,
-                    f'Flight Type: {flight.flight_type}' \
-                    f'Departure Date: {flight.departure_date}' \
+                    f'Flight Type: {flight.flight_type}' +
+                    f'Departure Date: {flight.departure_date}' +
                     f'Location: {flight.to_location}'
                 )
 
