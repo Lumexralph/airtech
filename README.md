@@ -133,7 +133,6 @@ The project has been built with the following technologies so far:
 
 ##### Contributing
 
-All proposals for contribution must satisfy the guidelines in the product wiki.
 When contributing to this repository, please first discuss the change you wish to make via issue, email, or any other method with the owners of this repository before making a change.This Project shall be utilising a [Pivotal Tracker board](https://www.pivotaltracker.com/n/projects/2170023) to track the work done.
 
 ##### Pull Request Process
